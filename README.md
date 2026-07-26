@@ -64,6 +64,9 @@ ln -s "$PWD" ~/.claude/skills/paper-figure-notes
 只有读图那步需要多模态模型，而任务文件是**自包含 markdown**（切图绝对路径 + 原文 +
 规则 + 正反例 + 输出骨架都在一个文件里），丢给任何能读图能写文件的 agent 都能执行。
 
+Codex / Cursor / 其它 agent 的现成 prompt 见 [`docs/agent-prompt.md`](docs/agent-prompt.md)，
+复制粘贴改两处路径即可。
+
 ## 用法
 
 流水线是两段式的：确定性的部分用脚本跑，读图的部分交给多模态 agent。
@@ -196,6 +199,11 @@ Nature 系一次暴露四个缺陷，全部修复并写进
 | [`PLAN.md`](PLAN.md) | 架构、数据模型、分阶段计划 |
 | [`references/feasibility.md`](references/feasibility.md) | 切图方案的实测验证记录 |
 | [`schemas/figure.schema.json`](schemas/figure.schema.json) | 输出契约（由 `scripts/pfn/models.py` 生成，勿手改） |
+| [`docs/agent-prompt.md`](docs/agent-prompt.md) | 在 Codex / Cursor 等 agent 里使用的现成 prompt |
+
+## 许可
+
+[MIT](LICENSE)
 
 ## 开发
 
