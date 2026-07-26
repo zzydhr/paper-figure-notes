@@ -28,6 +28,7 @@ SCHEMA_VERSION = "1.0"
 BBox = tuple[float, float, float, float]  # (x0, y0, x1, y1)，PDF point 坐标
 
 
+
 class LayoutRoute(str, Enum):
     """切图走了哪条路线，用于排查与置信度评估。"""
 

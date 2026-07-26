@@ -87,10 +87,15 @@ python scripts/pfn/extract.py merge --out notes_paper
 python scripts/paper_figure_notes.py render --out notes_paper
 ```
 
-### 控制成本
+### 控制耗时与成本
 
-**token 全部花在第 3 步读图**——第 1、2、5 步是纯 Python，一篇 18 图的论文加起来约 2 秒、
-零 token。所以省钱要从「少抽字段」和「少抽图」下手，而不是「少生成文件」：
+**时间和 token 都压在第 3 步。** 一篇 18 图论文实测：prep 约 40 秒、tasks 2 秒、
+render 20 秒，而读图抽取要几十分钟。
+
+慢的主因是**输出量**——18 张图产出约 900 KB JSON，比文本输入（529 KB 任务文件）还多，
+而生成比阅读慢一个数量级。时间基本花在逐字往外写。
+
+三个可选手段，按需要挑：
 
 ```bash
 # 只要「每张图做了什么、结论是什么」，不抽分组/n/统计/溯源
@@ -103,10 +108,19 @@ python scripts/pfn/extract.py tasks --out notes_paper --figures main
 python scripts/pfn/extract.py tasks --out notes_paper --level light --figures main,1-4
 ```
 
+第三个手段不用改命令：**一个 subagent 只抽一张图**。任务文件互不依赖，可以全部并行，
+墙钟时间取决于最慢的那一张。规则会被重复读进去、输入略增，但输入便宜输出贵，这笔换算划算。
+
 实测输入体积（以 18 图论文为基准）：`full` 全部 100% · `light` 全部 76% ·
 `light --figures main` 36% · `light --figures main,1-4` 18%。
-`--level` 主要省输出侧（只写四五个字段）；**读图是每张图的固定开销，档位省不掉**，
-要按比例省只能靠 `--figures`。
+`--level` 的主要收益在**输出侧**（降到约 15~20%），而输出正是耗时主体。
+
+**怎么选**：要做可重复性核查或跨文献汇总就用 `full`——n、统计方法、逐字段溯源缺一不可，
+降档会让这些字段全空。只是想快速判断「这篇值不值得精读」，`light` 足够。
+拿不准就用 `full`：省下的时间远不如漏掉 `n` 的代价大。
+
+**不要压缩图片分辨率。** 切图约 1400×1800，压小确实能省输入，但坐标轴刻度和流式象限
+百分比会读不清——省成本换来看不出的错误，不划算。
 
 只想要单页可视化、不要其余文件：`render --outputs page`（省 1.5 秒，不省 token）。
 

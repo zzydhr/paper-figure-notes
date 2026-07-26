@@ -152,6 +152,10 @@ The control group was used for comparison. Data are expressed as mean ± SD.
 图上印着 `86.63%` 就写 `86.63%`；只能目测柱高就写 `约 75%`，
 不要写成 `75.0%` 假装精确。
 
+**同一条理由在一张图里只写一次。** `not_reported` 后面括号里的说明很有价值——它证明
+你确实查过而不是漏填——但同一句话不必在多个 panel 里重复：第一次写全，后续 panel
+写裸的 `not_reported` 即可，共性原因归到图级 `open_questions`。
+
 ### 领域判定（`domain`）
 
 先看图题 + 上下文，判定这张图属于哪套 profile，再按对应列填 `design` / `groups`：

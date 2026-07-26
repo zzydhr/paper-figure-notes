@@ -237,8 +237,6 @@ class PageInfo:
     content_top: float
     content_bottom: float
     img_rects: list[fitz.Rect]
-    draw_rects: list[fitz.Rect]
-    hrules: list[fitz.Rect]  # 细横线：三线表的表线
     text_rects: list[fitz.Rect]
     words: list[tuple]  # get_text("words") 原始结果，表格通道 B 复用
     anchors: list[CaptionAnchor]
@@ -246,6 +244,40 @@ class PageInfo:
     #: TextPage 只对 Page 持弱引用，Page 一被回收就用不了了——必须一起留住。
     page: Optional[fitz.Page] = None
     textpage: object = None  # 复用给 parse.py 取 dict，别再重建（每次约 0.2s）
+
+    #: 矢量绘图的缓存。`get_drawings()` 是全流程最贵的单项（44 页实测 8.2s），
+    #: 而多数页从不需要它——纯正文页、期刊位图页都走不到矢量分支。
+    #: 故改为**首次访问时才算**，由下面两个属性触发。
+    _draw_cache: Optional[tuple[list, list]] = None
+
+    def _drawings(self) -> tuple[list, list]:
+        if self._draw_cache is None:
+            draws: list[fitz.Rect] = []
+            rules: list[fitz.Rect] = []
+            if self.page is not None:
+                page_area = _area(self.rect) or 1.0
+                # rect 是 tuple，先用裸数值筛，别急着建 Rect 对象
+                for d in self.page.get_cdrawings():
+                    x0, y0, x1, y1 = d["rect"]
+                    w, h = x1 - x0, y1 - y0
+                    if h <= 3.0 and w > 60.0:
+                        rules.append(fitz.Rect(x0, y0, x1, y1) & self.rect)
+                    if w < MIN_DRAW_SIDE or h < MIN_DRAW_SIDE or w * h > 0.92 * page_area:
+                        continue
+                    r = fitz.Rect(x0, y0, x1, y1) & self.rect
+                    if not r.is_empty:
+                        draws.append(r)
+            self._draw_cache = (draws, rules)
+        return self._draw_cache
+
+    @property
+    def draw_rects(self) -> list[fitz.Rect]:
+        return self._drawings()[0]
+
+    @property
+    def hrules(self) -> list[fitz.Rect]:
+        """细横线：三线表的表线。"""
+        return self._drawings()[1]
 
     @property
     def page_no(self) -> int:
@@ -353,36 +385,29 @@ def _build_page_info(
 
     text_rects = [fitz.Rect(b[:4]) for b in blocks]
 
+    # 一次 get_image_info(hashes=False) 取全页图像位置。
+    # 早先按 xref 逐个 get_image_rects()，PyMuPDF 内部会**解码图像算 MD5** 去重，
+    # 44 页实测 782 次调用花掉 3.9s；我们只要 bbox，用不着哈希。
     img_rects: list[fitz.Rect] = []
     seen: set[tuple[int, int, int, int]] = set()
-    for meta in page.get_images(full=True):
-        try:
-            rects = page.get_image_rects(meta[0])
-        except Exception:  # 损坏的 xref，跳过而非中断
-            continue
-        for r in rects:
-            r = fitz.Rect(r) & rect
-            if r.width < MIN_IMG_SIDE or r.height < MIN_IMG_SIDE:
+    try:
+        placements = page.get_image_info(hashes=False, xrefs=False)
+    except Exception:  # noqa: BLE001 — 老版本或损坏页，退回逐 xref
+        placements = []
+        for meta in page.get_images(full=True):
+            try:
+                placements += [{"bbox": tuple(r)} for r in page.get_image_rects(meta[0])]
+            except Exception:  # noqa: BLE001
                 continue
-            key = (int(r.x0), int(r.y0), int(r.x1), int(r.y1))
-            if key in seen:
-                continue
-            seen.add(key)
-            img_rects.append(r)
-
-    draw_rects: list[fitz.Rect] = []
-    hrules: list[fitz.Rect] = []
-    page_area = _area(rect) or 1.0
-    for d in page.get_cdrawings():  # rect 是 tuple，先用裸数值筛，别急着建对象
-        x0, y0, x1, y1 = d["rect"]
-        w, h = x1 - x0, y1 - y0
-        if h <= 3.0 and w > 60.0:
-            hrules.append(fitz.Rect(x0, y0, x1, y1) & rect)
-        if w < MIN_DRAW_SIDE or h < MIN_DRAW_SIDE or w * h > 0.92 * page_area:
+    for item in placements:
+        r = fitz.Rect(item["bbox"]) & rect
+        if r.width < MIN_IMG_SIDE or r.height < MIN_IMG_SIDE:
             continue
-        r = fitz.Rect(x0, y0, x1, y1) & rect
-        if not r.is_empty:
-            draw_rects.append(r)
+        key = (int(r.x0), int(r.y0), int(r.x1), int(r.y1))
+        if key in seen:
+            continue
+        seen.add(key)
+        img_rects.append(r)
 
     info = PageInfo(
         pno=pno,
@@ -392,8 +417,6 @@ def _build_page_info(
         content_top=top,
         content_bottom=bottom,
         img_rects=img_rects,
-        draw_rects=draw_rects,
-        hrules=hrules,
         text_rects=text_rects,
         words=words,
         anchors=find_caption_anchors(blocks, pno),
