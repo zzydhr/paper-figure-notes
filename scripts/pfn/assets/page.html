@@ -1,0 +1,547 @@
+<title>脾脏 TRNP1hiCD8+ T 细胞与肝纤维化 · 图级实验设计</title>
+
+<style>
+:root{
+  --paper:#FAFAF8; --surface:#FFF; --surface-2:#F3F3EF; --rule:#DEDCD6;
+  --ink:#191C22; --ink-2:#565C66; --ink-3:#8A9098;
+  --blue:#1F4E6B; --blue-wash:#E8F0F5;
+  --crimson:#A6353F; --crimson-wash:#F8ECEC;
+  --amber:#8E6110; --amber-wash:#F7EFDF;
+  --moss:#33604A; --moss-wash:#E8F0EA;
+  --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Songti SC","Noto Serif CJK SC",serif;
+  --sans:ui-sans-serif,system-ui,"Segoe UI","PingFang SC","Microsoft YaHei","Noto Sans CJK SC",sans-serif;
+  --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){:root{
+  --paper:#101318; --surface:#171B21; --surface-2:#1E232B; --rule:#2B313A;
+  --ink:#E7E9EC; --ink-2:#A2A9B4; --ink-3:#6E7681;
+  --blue:#82B7D6; --blue-wash:#17242E;
+  --crimson:#E0949A; --crimson-wash:#2A1A1C;
+  --amber:#DCA65C; --amber-wash:#291F12;
+  --moss:#86B79C; --moss-wash:#16241C;
+}}
+:root[data-theme=dark]{
+  --paper:#101318; --surface:#171B21; --surface-2:#1E232B; --rule:#2B313A;
+  --ink:#E7E9EC; --ink-2:#A2A9B4; --ink-3:#6E7681;
+  --blue:#82B7D6; --blue-wash:#17242E;
+  --crimson:#E0949A; --crimson-wash:#2A1A1C;
+  --amber:#DCA65C; --amber-wash:#291F12;
+  --moss:#86B79C; --moss-wash:#16241C;
+}
+:root[data-theme=light]{
+  --paper:#FAFAF8; --surface:#FFF; --surface-2:#F3F3EF; --rule:#DEDCD6;
+  --ink:#191C22; --ink-2:#565C66; --ink-3:#8A9098;
+  --blue:#1F4E6B; --blue-wash:#E8F0F5;
+  --crimson:#A6353F; --crimson-wash:#F8ECEC;
+  --amber:#8E6110; --amber-wash:#F7EFDF;
+  --moss:#33604A; --moss-wash:#E8F0EA;
+}
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1360px;margin-inline:auto;padding:clamp(1.4rem,3vw,2.4rem) clamp(.9rem,2.5vw,1.6rem) 4rem}
+
+/* header */
+header{display:flex;flex-direction:column;gap:.5rem;padding-bottom:1.1rem;border-bottom:2px solid var(--ink)}
+.eyebrow{font-family:var(--mono);font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3)}
+h1{font-family:var(--serif);font-size:clamp(1.5rem,3.4vw,2.15rem);line-height:1.2;font-weight:600;margin:0;text-wrap:balance}
+.meta{font-size:.86rem;color:var(--ink-2);display:flex;flex-wrap:wrap;gap:.4rem 1rem}
+.meta a{color:var(--blue)}
+
+/* kpi */
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(8.5rem,1fr));gap:.55rem;margin:1.1rem 0 1.3rem}
+.kpi{background:var(--surface);border:1px solid var(--rule);border-radius:5px;padding:.6rem .75rem;display:flex;flex-direction:column;gap:.1rem}
+.kpi b{font-family:var(--serif);font-size:1.55rem;line-height:1.1;font-variant-numeric:tabular-nums}
+.kpi span{font-size:.72rem;color:var(--ink-3);letter-spacing:.02em}
+.kpi.warn b{color:var(--amber)} .kpi.good b{color:var(--moss)}
+
+/* tabs */
+nav{display:flex;gap:.25rem;border-bottom:1px solid var(--rule);margin-bottom:1.2rem;overflow-x:auto}
+nav button{appearance:none;background:none;border:0;border-bottom:2px solid transparent;color:var(--ink-2);
+  font:inherit;font-size:.9rem;padding:.55rem .85rem;cursor:pointer;white-space:nowrap}
+nav button[aria-selected=true]{color:var(--ink);border-bottom-color:var(--crimson);font-weight:600}
+nav button:focus-visible{outline:2px solid var(--blue);outline-offset:-2px}
+
+/* browser layout */
+.browse{display:grid;grid-template-columns:minmax(13rem,17rem) 1fr;gap:1.2rem;align-items:start}
+@media (max-width:820px){.browse{grid-template-columns:1fr}}
+.rail{position:sticky;top:.6rem;max-height:calc(100vh - 1.6rem);overflow-y:auto;display:flex;flex-direction:column;gap:.15rem}
+.rail h3{font-family:var(--mono);font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);margin:.7rem 0 .25rem}
+.rail button{display:grid;grid-template-columns:auto 1fr auto;gap:.45rem;align-items:baseline;text-align:left;
+  background:none;border:0;border-left:3px solid transparent;border-radius:0 4px 4px 0;color:var(--ink-2);
+  font:inherit;font-size:.82rem;padding:.38rem .5rem;cursor:pointer;width:100%}
+.rail button:hover{background:var(--surface-2)}
+.rail button[aria-current=true]{background:var(--surface);border-left-color:var(--crimson);color:var(--ink);font-weight:600}
+.rail .fid{font-family:var(--mono);font-size:.7rem;color:var(--ink-3)}
+.rail .np{font-family:var(--mono);font-size:.68rem;color:var(--ink-3);font-variant-numeric:tabular-nums}
+.dot{width:.4rem;height:.4rem;border-radius:50%;display:inline-block;flex:none}
+.d-high{background:var(--moss)} .d-medium{background:var(--amber)} .d-low{background:var(--crimson)}
+
+/* figure detail */
+.detail{min-width:0;display:flex;flex-direction:column;gap:1rem}
+.figHead{display:flex;flex-direction:column;gap:.4rem}
+.figHead h2{font-family:var(--serif);font-size:1.35rem;line-height:1.25;margin:0;text-wrap:balance}
+.tagrow{display:flex;flex-wrap:wrap;gap:.35rem;align-items:center}
+.tag{font-family:var(--mono);font-size:.68rem;padding:.14em .45em;border-radius:3px;background:var(--surface-2);color:var(--ink-2);white-space:nowrap}
+.tag.b{background:var(--blue-wash);color:var(--blue)} .tag.a{background:var(--amber-wash);color:var(--amber)}
+.tag.c{background:var(--crimson-wash);color:var(--crimson)} .tag.m{background:var(--moss-wash);color:var(--moss)}
+.qbox{background:var(--surface);border:1px solid var(--rule);border-left:3px solid var(--blue);border-radius:4px;padding:.6rem .8rem;font-size:.92rem}
+.qbox em{font-style:normal;font-family:var(--mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);display:block;margin-bottom:.15rem}
+/* 图与 panel 并排：图钉住，panel 在旁边滚——读到哪个 panel 都还看得见图。
+   （真按 panel 切图不可靠：标号只有约三成在文本层，白缝分割块数也对不上，
+     切错的小图配错的解释比不切更糟，故改用这个方案。） */
+.split{display:grid;grid-template-columns:minmax(0,1fr);gap:1rem;align-items:start}
+@media (min-width:1080px){.split{grid-template-columns:minmax(17rem,41%) minmax(0,1fr)}}
+.figPane{position:sticky;top:.6rem;align-self:start;min-width:0}
+.panelPane{display:flex;flex-direction:column;gap:.7rem;min-width:0}
+figure{margin:0;background:var(--surface);border:1px solid var(--rule);border-radius:5px;padding:.5rem;overflow:auto}
+figure img{display:block;width:100%;height:auto;max-height:78vh;object-fit:contain;border-radius:2px;background:#fff;cursor:zoom-in}
+figure img.zoom{cursor:zoom-out;max-width:none;max-height:none;width:auto;object-fit:none}
+@media (max-width:1079px){figure img{max-height:46vh}}
+figcaption{font-family:var(--mono);font-size:.68rem;color:var(--ink-3);padding-top:.4rem}
+
+/* panels */
+.panel{background:var(--surface);border:1px solid var(--rule);border-radius:5px;overflow:hidden}
+.panel>summary{list-style:none;cursor:pointer;padding:.6rem .8rem;display:grid;grid-template-columns:auto 1fr auto;gap:.55rem;align-items:baseline}
+.panel>summary::-webkit-details-marker{display:none}
+.panel>summary:hover{background:var(--surface-2)}
+.plabel{font-family:var(--serif);font-weight:700;font-size:1rem;color:var(--crimson);min-width:1.2em}
+.pexp{font-size:.9rem;line-height:1.45}
+.pmeta{font-family:var(--mono);font-size:.68rem;color:var(--ink-3);white-space:nowrap}
+.pbody{padding:0 .8rem .8rem;display:flex;flex-direction:column;gap:.6rem;border-top:1px solid var(--rule)}
+.dl{display:grid;grid-template-columns:auto 1fr;gap:.15rem .6rem;font-size:.83rem;margin:.55rem 0 0}
+.dl dt{font-family:var(--mono);font-size:.68rem;color:var(--ink-3);white-space:nowrap;padding-top:.16em}
+.dl dd{margin:0;color:var(--ink-2)}
+.scroll{overflow-x:auto;border:1px solid var(--rule);border-radius:4px}
+table{border-collapse:collapse;width:100%;min-width:44rem;font-size:.8rem;font-variant-numeric:tabular-nums}
+th,td{padding:.4rem .55rem;text-align:left;border-bottom:1px solid var(--rule);vertical-align:top}
+thead th{font-family:var(--mono);font-size:.66rem;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3);background:var(--surface-2);white-space:nowrap;position:sticky;top:0}
+tbody tr:last-child td{border-bottom:0}
+tbody tr:hover{background:var(--surface-2)}
+.role{font-family:var(--mono);font-size:.64rem;padding:.1em .35em;border-radius:3px;white-space:nowrap}
+.role-control{background:var(--blue-wash);color:var(--blue)}
+.role-treatment{background:var(--crimson-wash);color:var(--crimson)}
+.role-baseline{background:var(--surface-2);color:var(--ink-2)}
+.role-ablation{background:var(--amber-wash);color:var(--amber)}
+.role-reference{background:var(--moss-wash);color:var(--moss)}
+.nr{color:var(--ink-3);font-style:italic}
+.find{background:var(--moss-wash);border-radius:4px;padding:.45rem .65rem;font-size:.86rem}
+.find b{color:var(--moss);font-family:var(--mono);font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;display:block;margin-bottom:.1rem}
+.inf{background:var(--amber-wash);border-radius:4px;padding:.45rem .65rem;font-size:.8rem;color:var(--amber)}
+.src{font-family:var(--mono);font-size:.68rem;color:var(--ink-3);line-height:1.7}
+.oq{background:var(--surface);border:1px solid var(--rule);border-left:3px solid var(--amber);border-radius:4px;padding:.6rem .8rem}
+.oq h4{font-family:var(--mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--amber);margin:0 0 .3rem}
+.oq ul{margin:0;padding-left:1.05rem;font-size:.84rem;color:var(--ink-2);display:flex;flex-direction:column;gap:.18rem}
+
+/* finder */
+.tools{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:.8rem;align-items:center}
+input[type=search],select{font:inherit;font-size:.85rem;padding:.4rem .6rem;border:1px solid var(--rule);
+  border-radius:4px;background:var(--surface);color:var(--ink);min-width:0}
+input[type=search]{flex:1 1 16rem}
+input:focus-visible,select:focus-visible{outline:2px solid var(--blue);outline-offset:1px}
+.count{font-family:var(--mono);font-size:.75rem;color:var(--ink-3);white-space:nowrap}
+.ctx{font-family:var(--mono);font-size:.66rem;color:var(--ink-3);white-space:nowrap}
+
+/* review */
+.rev{display:flex;flex-direction:column;gap:.5rem}
+.revfig{background:var(--surface);border:1px solid var(--rule);border-radius:5px;padding:.6rem .8rem}
+.revfig h4{font-family:var(--serif);font-size:.98rem;margin:0 0 .35rem}
+.revfig ul{margin:0;padding-left:1.05rem;display:flex;flex-direction:column;gap:.22rem;font-size:.82rem;color:var(--ink-2)}
+.revfig .k{font-family:var(--mono);font-size:.64rem;padding:.08em .32em;border-radius:3px;margin-right:.3rem}
+.k-sentinel{background:var(--crimson-wash);color:var(--crimson)}
+.k-inferred{background:var(--amber-wash);color:var(--amber)}
+.k-low_confidence{background:var(--surface-2);color:var(--ink-2)}
+/* svg 图形区（导图 / 流程图共用） */
+.canvas{background:var(--surface);border:1px solid var(--rule);border-radius:5px;overflow:hidden;
+  position:relative;height:clamp(28rem,72vh,60rem)}
+.canvas svg{display:block;width:100%;height:100%;cursor:grab;touch-action:none}
+.canvas svg.drag{cursor:grabbing}
+.canvas .hint{position:absolute;right:.6rem;bottom:.5rem;font-family:var(--mono);font-size:.66rem;
+  color:var(--ink-3);background:var(--surface);padding:.2rem .45rem;border-radius:3px;
+  border:1px solid var(--rule);pointer-events:none}
+.nd-label{font-family:var(--sans);dominant-baseline:middle}
+.nd-root{font-family:var(--serif);font-weight:600}
+.lnk{fill:none;stroke:var(--rule);stroke-width:1.4}
+.lnk-ed{stroke-dasharray:3 3}
+.chip{rx:4;ry:4}
+/* tree */
+.tree{font-size:.86rem;line-height:1.55}
+.tree ul{list-style:none;margin:0;padding-left:1.15rem;border-left:1px solid var(--rule)}
+.tree>ul{padding-left:0;border-left:0}
+.tree li{padding:.06rem 0}
+.tree details>summary{list-style:none;cursor:pointer;display:flex;gap:.35rem;align-items:baseline;
+  padding:.1rem .3rem;border-radius:3px;margin-left:-.3rem}
+.tree details>summary::-webkit-details-marker{display:none}
+.tree details>summary:hover{background:var(--surface-2)}
+.tree details>summary::before{content:"▸";color:var(--ink-3);font-size:.7em;flex:none;
+  transition:transform .12s;display:inline-block;width:.7em}
+.tree details[open]>summary::before{transform:rotate(90deg)}
+.tree .leaf{display:flex;gap:.35rem;align-items:baseline;padding:.1rem .3rem .1rem 1rem}
+.tree .n-fig{font-family:var(--serif);font-weight:600;font-size:.98rem}
+.tree .n-panel{font-weight:600;color:var(--crimson)}
+.tree .n-q{color:var(--ink-2)}
+.tree .n-iv{color:var(--blue);font-family:var(--mono);font-size:.76rem}
+.tree .n-find{color:var(--moss)}
+.tree .n-res{color:var(--ink-2)}
+.tree .warn{color:var(--amber)}
+.hidden{display:none!important}
+footer{margin-top:2rem;padding-top:1rem;border-top:1px solid var(--rule);font-family:var(--mono);font-size:.7rem;color:var(--ink-3);line-height:1.8}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+
+<div class="wrap">
+<header>
+  <div class="eyebrow" id="eyebrow"></div>
+  <h1 id="title"></h1>
+  <div class="meta" id="meta"></div>
+</header>
+
+<div class="kpis" id="kpis"></div>
+
+<nav role="tablist">
+  <button role="tab" aria-selected="true" data-tab="browse">逐图精读</button>
+  <button role="tab" aria-selected="false" data-tab="flow">全文流程</button>
+  <button role="tab" aria-selected="false" data-tab="tree">证据链导图</button>
+  <button role="tab" aria-selected="false" data-tab="finder">分组检索</button>
+  <button role="tab" aria-selected="false" data-tab="review">待复核</button>
+</nav>
+
+<section id="browse" class="browse">
+  <aside class="rail" id="rail"></aside>
+  <div class="detail" id="detail"></div>
+</section>
+
+<section id="flow" class="hidden">
+  <div class="qbox" style="margin-bottom:.8rem">
+    <em>这是什么</em>
+    全文的论证链：<b>正文图构成主线</b>（每一步解决一个问题，箭头是推进方向），
+    <b>Extended Data 挂在它支持的那张正文图旁</b>（虚线，取自图题里的 “related to Fig. N”）。
+    点任一节点跳到该图的精读。
+  </div>
+  <div class="canvas" id="flowBox"><span class="hint">滚轮缩放 · 拖动平移</span></div>
+</section>
+
+<section id="tree" class="hidden">
+  <div class="tools">
+    <span class="count">展开到</span>
+    <select id="depth">
+      <option value="1">图</option>
+      <option value="2" selected>子图 panel</option>
+      <option value="3">分组</option>
+    </select>
+    <button id="fitBtn" style="font:inherit;font-size:.82rem;padding:.35rem .7rem;border:1px solid var(--rule);border-radius:4px;background:var(--surface);color:var(--ink);cursor:pointer">回到全览</button>
+    <span class="count">⚠ ＝ 含模型推断字段或低置信 · 点节点跳到该图精读</span>
+  </div>
+  <div class="canvas" id="treeBox"><span class="hint">滚轮缩放 · 拖动平移</span></div>
+</section>
+
+<section id="finder" class="hidden">
+  <div class="tools">
+    <input type="search" id="q" placeholder="搜组名、处理条件、指标、结果…（如 MCDHFD、Trnp1cko、α-SMA）">
+    <select id="roleSel"><option value="">全部角色</option></select>
+    <select id="figSel"><option value="">全部图</option></select>
+    <span class="count" id="cnt"></span>
+  </div>
+  <div class="scroll"><table id="ftab">
+    <thead><tr><th>图 / 子图</th><th>组名</th><th>角色</th><th>处理条件</th><th>n</th><th>测量指标</th><th>结果</th></tr></thead>
+    <tbody></tbody>
+  </table></div>
+</section>
+
+<section id="review" class="hidden">
+  <div class="qbox" style="margin-bottom:.9rem">
+    <em>怎么用这一栏</em>
+    这里列出的<b>不是错误</b>，是需要你判断的地方。<b class="k k-sentinel">哨兵</b>＝图题里写了、但某个 panel 填成「未说明」，
+    多半该回填（代表性染色图除外，那类本来就没有 n）。<b class="k k-inferred">推断</b>＝模型从图上推出来的，
+    如「从散点数推断 n=6」，值得对照原图确认。<b class="k k-low_confidence">低置信</b>＝整图判定不确定。
+  </div>
+  <div class="rev" id="revList"></div>
+</section>
+
+<footer id="foot"></footer>
+</div>
+
+<script id="D" type="application/json">__DATA__</script>
+<script>
+const D = JSON.parse(document.getElementById('D').textContent);
+const $ = (s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
+const esc = s => String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const isNR = s => /^未说明/.test(String(s??''));
+const cell = s => isNR(s) ? `<span class="nr">${esc(s)}</span>` : esc(s);
+const ROLE = {control:'对照',treatment:'处理',baseline:'baseline',ablation:'消融',reference:'参照'};
+
+/* header + kpi */
+$('#eyebrow').textContent = [D.paper.venue, D.paper.year, '图级实验设计提取']
+  .filter(Boolean).join(' · ');
+$('#title').textContent = D.paper.title;
+$('#meta').innerHTML = (D.paper.doi?`<span>DOI <a href="https://doi.org/${esc(D.paper.doi)}">${esc(D.paper.doi)}</a></span>`:'')
+  + `<span>每个字段标注来源：图题 / 正文段号 / Methods 节号 / 读图 / 模型推断</span>`;
+const K = D.kpi;
+$('#kpis').innerHTML = [
+  [K.figs,`张图（${D.paper.mix}）`,''],
+  [K.panels,'个子图 panel',''],
+  [K.groups,'个实验组',''],
+  [K.nRate+'%','实验组报告了 n', K.nRate>=70?'good':'warn'],
+  [K.stRate+'%','panel 说明了统计检验','warn'],
+  [K.review,'条待人工判断','warn'],
+].map(([v,l,c])=>`<div class="kpi ${c}"><b>${v}</b><span>${l}</span></div>`).join('');
+
+/* tabs */
+$$('nav button').forEach(b=>b.onclick=()=>{
+  $$('nav button').forEach(x=>x.setAttribute('aria-selected', x===b));
+  ['browse','flow','tree','finder','review'].forEach(id=>$('#'+id).classList.toggle('hidden', id!==b.dataset.tab));
+});
+
+/* rail */
+const rail=$('#rail'); let cur=0;
+function buildRail(){
+  let h='', last=null;
+  D.figs.forEach((f,i)=>{
+    const grp = f.ext?'Extended Data':'正文图';
+    if(grp!==last){ h+=`<h3>${grp}</h3>`; last=grp; }
+    const short = f.t.length>30 ? f.t.slice(0,30)+'…' : f.t;
+    h+=`<button data-i="${i}" aria-current="${i===cur}">
+      <span class="dot d-${f.conf}" title="切图置信度 ${f.conf}"></span>
+      <span><span class="fid">${esc(f.id.replace('Extended Data ','ED '))}</span> ${esc(short)}</span>
+      <span class="np">${f.p.length||'—'}</span></button>`;
+  });
+  rail.innerHTML=h;
+  $$('button',rail).forEach(b=>b.onclick=()=>{cur=+b.dataset.i;buildRail();renderFig();
+    $('#detail').scrollIntoView({block:'start',behavior:'smooth'});});
+}
+function srcLine(s){
+  const parts=[];
+  if(s.cap?.length) parts.push(`图题 → ${s.cap.join('、')}`);
+  if(s.body?.length) parts.push(`正文 → ${s.body.join('、')}`);
+  if(s.meth?.length) parts.push(`Methods → ${s.meth.join('、')}`);
+  if(s.img?.length) parts.push(`读图 → ${s.img.join('、')}`);
+  return parts.length?`<div class="src">溯源　${parts.map(esc).join('　|　')}</div>`:'';
+}
+function renderFig(){
+  const f=D.figs[cur];
+  const st=['检验','误差棒','重复','显著性'];
+  let h=`<div class="figHead">
+    <div class="tagrow">
+      <span class="tag ${f.ext?'a':'b'}">${esc(f.id)}</span>
+      <span class="tag">p${f.pg.join(', ')}</span>
+      <span class="tag ${f.conf==='high'?'m':f.conf==='medium'?'a':'c'}">切图置信度 ${f.conf}</span>
+      <span class="tag">${f.p.length} 个子图</span>
+      <span class="tag">${f.p.reduce((a,p)=>a+p.g.length,0)} 个实验组</span>
+      ${f.rev.length?`<span class="tag c">${f.rev.length} 条待复核</span>`:''}
+    </div>
+    <h2>${esc(f.t)}</h2>
+  </div>`;
+  if(f.q) h+=`<div class="qbox"><em>这张图要回答什么</em>${esc(f.q)}</div>`;
+  h+=`<div class="split">`;
+  if(f.img) h+=`<aside class="figPane"><figure>
+    <img src="${f.img}" alt="${esc(f.id)}" loading="lazy">
+    <figcaption>滚动时此图保持可见 · 点击放大到原始比例 · 读精确数值请看同目录 figures\\ 下的高清切图</figcaption>
+  </figure></aside>`;
+  h+=`<div class="panelPane">`;
+  f.p.forEach((p,i)=>{
+    h+=`<details class="panel" ${i<2?'open':''}>
+      <summary><span class="plabel">${esc(p.l)}</span>
+        <span class="pexp">${esc(p.e)}</span>
+        <span class="pmeta">${p.g.length} 组${p.inf.length?' · ⚠':''}</span></summary>
+      <div class="pbody">
+        <dl class="dl">
+          <dt>自变量</dt><dd>${cell(p.iv)}</dd>
+          ${p.lv.length?`<dt>水平</dt><dd>${p.lv.map(esc).join(' / ')}</dd>`:''}
+          <dt>实验单位</dt><dd>${cell(p.u)}</dd>
+          ${p.ctl.length?`<dt>受控条件</dt><dd>${p.ctl.map(esc).join('；')}</dd>`:''}
+        </dl>`;
+    if(p.g.length) h+=`<div class="scroll"><table><thead><tr>
+        <th>组名</th><th>角色</th><th>处理条件</th><th>n</th><th>测量指标</th><th>结果</th><th>vs 对照</th></tr></thead><tbody>`
+      + p.g.map(g=>`<tr><td><b>${esc(g.n)}</b></td>
+        <td><span class="role role-${g.r}">${ROLE[g.r]||g.r}</span></td>
+        <td>${cell(g.c)}</td><td>${cell(g.nn)}</td><td>${cell(g.ro)}</td>
+        <td>${cell(g.res)}</td><td>${cell(g.vc)}</td></tr>`).join('') + `</tbody></table></div>`;
+    h+=`<dl class="dl">${st.map((k,j)=>`<dt>${k}</dt><dd>${cell(p.st[j])}</dd>`).join('')}</dl>`;
+    if(p.f) h+=`<div class="find"><b>本 panel 结论</b>${esc(p.f)}</div>`;
+    if(p.inf.length) h+=`<div class="inf">⚠ 模型推断字段（需对照原图复核）：${p.inf.map(esc).join('、')}</div>`;
+    h+=srcLine(p.src)+`</div></details>`;
+  });
+  if(f.c) h+=`<div class="find"><b>整图结论</b>${esc(f.c)}</div>`;
+  if(f.oq.length) h+=`<div class="oq"><h4>原文未交代（影响可重复性）</h4><ul>${f.oq.map(q=>`<li>${esc(q)}</li>`).join('')}</ul></div>`;
+  h+=`</div></div>`;  // panelPane, split
+  $('#detail').innerHTML=h;
+  $$('#detail figure img').forEach(im=>im.onclick=()=>im.classList.toggle('zoom'));
+}
+
+/* ── SVG 画布：滚轮缩放 + 拖动平移 ─────────────────────────
+   不引任何绘图库：节点位置自己算，连线用贝塞尔，缩放平移改 viewBox。
+   这样导图是真的图形，而且不给 2 MB 的页面再加负担。 */
+const NS='http://www.w3.org/2000/svg';
+function mount(host,w,h,inner){
+  host.querySelectorAll('svg').forEach(s=>s.remove());
+  const svg=document.createElementNS(NS,'svg');
+  svg.setAttribute('viewBox',`0 0 ${w} ${h}`);
+  svg.setAttribute('preserveAspectRatio','xMidYMin meet');
+  svg.innerHTML=inner;
+  host.insertBefore(svg,host.firstChild);
+  let vb=[0,0,w,h];
+  const apply=()=>svg.setAttribute('viewBox',vb.join(' '));
+  svg.addEventListener('wheel',e=>{
+    e.preventDefault();
+    const k=e.deltaY>0?1.12:1/1.12, r=svg.getBoundingClientRect();
+    const mx=vb[0]+(e.clientX-r.left)/r.width*vb[2],
+          my=vb[1]+(e.clientY-r.top)/r.height*vb[3];
+    vb=[mx-(mx-vb[0])*k,my-(my-vb[1])*k,vb[2]*k,vb[3]*k]; apply();
+  },{passive:false});
+  let drag=null;
+  svg.addEventListener('pointerdown',e=>{drag=[e.clientX,e.clientY];
+    svg.classList.add('drag'); svg.setPointerCapture(e.pointerId);});
+  svg.addEventListener('pointermove',e=>{
+    if(!drag)return;
+    const r=svg.getBoundingClientRect();
+    vb[0]-=(e.clientX-drag[0])/r.width*vb[2];
+    vb[1]-=(e.clientY-drag[1])/r.height*vb[3];
+    drag=[e.clientX,e.clientY]; apply();
+  });
+  ['pointerup','pointercancel','pointerleave'].forEach(t=>
+    svg.addEventListener(t,()=>{drag=null;svg.classList.remove('drag');}));
+  svg.addEventListener('click',e=>{
+    const g=e.target.closest('[data-fig]');
+    if(g){ const i=+g.dataset.fig; cur=i; buildRail(); renderFig();
+      $$('nav button').forEach(x=>x.setAttribute('aria-selected',x.dataset.tab==='browse'));
+      ['browse','flow','tree','finder','review'].forEach(id=>
+        $('#'+id).classList.toggle('hidden',id!=='browse'));
+      window.scrollTo({top:0,behavior:'smooth'}); }
+  });
+  return ()=>{vb=[0,0,w,h];apply();};
+}
+const cut=(s,n)=>{s=String(s||'');return s.length>n?s.slice(0,n)+'…':s;};
+
+/* ── 证据链导图：横向树 ───────────────────────────── */
+const COLX=[16,330,700,1090], CHARS=[52,42,40,22], ROW=21;
+let treeReset=null;
+function buildTree(){
+  const d=+$('#depth').value;
+  const root={txt:D.paper.title,cls:'nd-root',size:14,kids:[]};
+  D.figs.forEach((f,fi)=>{
+    const fn={txt:(f.rev.length?'⚠ ':'')+f.id.replace('Extended Data ','ED ')+' · '+f.t,
+      fig:fi,size:11.5,color:f.ext?'var(--ink-2)':'var(--ink)',
+      dot:f.conf,kids:[]};
+    if(d>=2) f.p.forEach(p=>{
+      const pn={txt:(p.inf.length?'⚠ ':'')+'Panel '+p.l+' · '+p.e,
+        size:10.5,color:'var(--crimson)',kids:[]};
+      if(d>=3) p.g.forEach(g=>pn.kids.push(
+        {txt:g.n,size:9.5,color:'var(--ink-2)',kids:[]}));
+      fn.kids.push(pn);
+    });
+    root.kids.push(fn);
+  });
+
+  let y=26;
+  (function lay(n,dep){
+    n.x=COLX[Math.min(dep,3)]; n.d=dep;
+    if(!n.kids.length){ n.y=y; y+=ROW; }
+    else { n.kids.forEach(k=>lay(k,dep+1));
+      n.y=(n.kids[0].y+n.kids[n.kids.length-1].y)/2; }
+  })(root,0);
+
+  let s='';
+  (function draw(n){
+    n.kids.forEach(k=>{
+      const mx=(n.x+k.x)/2+40;
+      s+=`<path class="lnk" d="M${n.x+8} ${n.y+4} C${mx} ${n.y+4}, ${mx} ${k.y+4}, ${k.x-6} ${k.y+4}"/>`;
+      draw(k);
+    });
+    const clickable=n.fig!=null;
+    s+=(n.dot?`<circle cx="${n.x-2}" cy="${n.y+4}" r="3" fill="var(--${n.dot==='high'?'moss':n.dot==='medium'?'amber':'crimson'})"/>`:'')
+      +`<text class="nd-label ${n.cls||''}" x="${n.x+(n.dot?8:0)}" y="${n.y+4}"`
+      +` font-size="${n.size}" fill="${n.color||'var(--ink)'}"`
+      +(clickable?` data-fig="${n.fig}" style="cursor:pointer"`:'')
+      +`>${esc(cut(n.txt,CHARS[Math.min(n.d,3)]))}</text>`;
+  })(root);
+  treeReset=mount($('#treeBox'),1420,Math.max(y+20,320),s);
+}
+$('#depth').addEventListener('input',buildTree);
+$('#fitBtn').onclick=()=>treeReset&&treeReset();
+
+/* ── 全文流程：正文图主线 + 附图支线 ──────────────────── */
+function buildFlow(){
+  const main=D.figs.map((f,i)=>({f,i})).filter(x=>!x.f.ext)
+    .sort((a,b)=>a.f.num-b.f.num);
+  const eds=D.figs.map((f,i)=>({f,i})).filter(x=>x.f.ext);
+  const BW=430,BH=54,GAP=30,X=40,EDX=540,EDW=350,EDH=30;
+
+  let y=24,s='',prev=null;
+  s+=`<defs><marker id="ar" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7"
+      markerHeight="7" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="var(--ink-3)"/></marker></defs>`;
+  main.forEach(({f,i},k)=>{
+    const kids=eds.filter(e=>e.f.rel===f.num);
+    const need=Math.max(BH+GAP,kids.length*(EDH+8)+GAP);
+    if(prev!==null)
+      s+=`<path class="lnk" marker-end="url(#ar)" stroke="var(--ink-3)"
+           d="M${X+BW/2} ${prev} L${X+BW/2} ${y-6}"/>`;
+    s+=`<rect class="chip" x="${X}" y="${y}" width="${BW}" height="${BH}"
+         fill="var(--surface-2)" stroke="var(--blue)" stroke-width="1.2"
+         data-fig="${i}" style="cursor:pointer"/>`
+      +`<text class="nd-label" x="${X+12}" y="${y+19}" font-size="12" font-weight="600"
+         fill="var(--blue)" data-fig="${i}" style="cursor:pointer">${k+1}. ${esc(f.id)}</text>`
+      +`<text class="nd-label" x="${X+12}" y="${y+37}" font-size="10.5"
+         fill="var(--ink-2)" data-fig="${i}" style="cursor:pointer">${esc(cut(f.t,46))}</text>`;
+    let ey=y;
+    kids.forEach(({f:e,i:ei})=>{
+      s+=`<path class="lnk lnk-ed" d="M${X+BW} ${y+BH/2} C${X+BW+50} ${y+BH/2},
+           ${EDX-50} ${ey+EDH/2}, ${EDX} ${ey+EDH/2}"/>`
+        +`<rect class="chip" x="${EDX}" y="${ey}" width="${EDW}" height="${EDH}"
+           fill="var(--surface)" stroke="var(--rule)"
+           data-fig="${ei}" style="cursor:pointer"/>`
+        +`<text class="nd-label" x="${EDX+10}" y="${ey+EDH/2}" font-size="10"
+           fill="var(--ink-2)" data-fig="${ei}" style="cursor:pointer">${
+             esc(cut(e.id.replace('Extended Data ','ED ')+' · '+e.t,52))}</text>`;
+      ey+=EDH+8;
+    });
+    prev=y+BH; y+=need;
+  });
+  const orphan=eds.filter(e=>!main.some(m=>m.f.num===e.f.rel));
+  if(orphan.length){
+    s+=`<text class="nd-label" x="${EDX}" y="${y+14}" font-size="10"
+         fill="var(--ink-3)">未标注归属的附图（图题里没写 related to Fig. N）</text>`;
+    let ey=y+26;
+    orphan.forEach(({f:e,i:ei})=>{
+      s+=`<rect class="chip" x="${EDX}" y="${ey}" width="${EDW}" height="${EDH}"
+           fill="var(--surface)" stroke="var(--rule)" stroke-dasharray="3 3"
+           data-fig="${ei}" style="cursor:pointer"/>`
+        +`<text class="nd-label" x="${EDX+10}" y="${ey+EDH/2}" font-size="10"
+           fill="var(--ink-2)" data-fig="${ei}" style="cursor:pointer">${
+             esc(cut(e.id.replace('Extended Data ','ED ')+' · '+e.t,52))}</text>`;
+      ey+=EDH+8;
+    });
+    y=ey;
+  }
+  mount($('#flowBox'),960,y+30,s);
+}
+
+/* finder */
+const ROWS=[];
+D.figs.forEach(f=>f.p.forEach(p=>p.g.forEach(g=>ROWS.push({...g,fig:f.id,pl:p.l,
+  key:[g.n,g.c,g.ro,g.res,g.vc,f.id,p.l].join(' ').toLowerCase()}))));
+$('#roleSel').innerHTML+=[...new Set(ROWS.map(r=>r.r))].map(r=>`<option value="${r}">${ROLE[r]||r}</option>`).join('');
+$('#figSel').innerHTML+=D.figs.map(f=>`<option value="${esc(f.id)}">${esc(f.id)}</option>`).join('');
+function renderFinder(){
+  const q=$('#q').value.trim().toLowerCase(), role=$('#roleSel').value, fig=$('#figSel').value;
+  const hit=ROWS.filter(r=>(!q||r.key.includes(q))&&(!role||r.r===role)&&(!fig||r.fig===fig));
+  $('#cnt').textContent=`${hit.length} / ${ROWS.length} 个实验组`;
+  $('#ftab tbody').innerHTML=hit.slice(0,400).map(r=>`<tr>
+    <td class="ctx">${esc(r.fig.replace('Extended Data ','ED '))} · ${esc(r.pl)}</td>
+    <td><b>${esc(r.n)}</b></td><td><span class="role role-${r.r}">${ROLE[r.r]||r.r}</span></td>
+    <td>${cell(r.c)}</td><td>${cell(r.nn)}</td><td>${cell(r.ro)}</td><td>${cell(r.res)}</td></tr>`).join('')
+    + (hit.length>400?`<tr><td colspan="7" class="ctx">仅显示前 400 条，请继续缩小筛选范围</td></tr>`:'');
+}
+['#q','#roleSel','#figSel'].forEach(s=>$(s).addEventListener('input',renderFinder));
+
+/* review */
+$('#revList').innerHTML=D.figs.filter(f=>f.rev.length).map(f=>`<div class="revfig">
+  <h4>${esc(f.id)} · ${esc(f.t)}</h4>
+  <ul>${f.rev.map(r=>`<li><span class="k k-${r.k}">${r.k==='sentinel'?'哨兵':r.k==='inferred'?'推断':'低置信'}</span>${r.p?`<b>Panel ${esc(r.p)}</b> `:''}${esc(r.t)}</li>`).join('')}</ul>
+</div>`).join('');
+
+$('#foot').innerHTML=`由 paper-figure-notes 生成 · 本页自包含，可离线打开或直接发给他人<br>`
+  +`同目录还有：完整笔记 figure-notes.md · 四列速览 figure-tables.md · `
+  +`一行一组长表 groups.xlsx · 单图导图 mindmaps/ · 原始切图 figures/`;
+
+buildRail(); renderFig(); buildTree(); buildFlow(); renderFinder();
+</script>
+

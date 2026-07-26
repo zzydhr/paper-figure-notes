@@ -1,0 +1,25 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.egg-info/
+.venv/
+venv/
+
+# 测试产物（每次跑 tests 会重建）
+tests/_out/
+tests/**/tmp*/
+
+# 业务数据不进仓库：论文 PDF 与生成的笔记目录动辄几十 MB，
+# 且属于用户的文献而非工具本身。默认输出到 <PDF目录>/notes_<论文名>/
+notes_*/
+*.pdf
+
+# 编辑器 / 系统
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+desktop.ini

@@ -1,0 +1,334 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://local/paper-figure-notes/schemas/figure.schema.json",
+  "title": "FigureRecord",
+  "description": "paper-figure-notes L3 抽取层输出：一张 figure 的结构化实验设计。L3 总输出，一图一条。序列化为 `figures.json` 的数组元素。 本文件由 scripts/pfn/models.py 的 FigureRecord 自动生成，请勿手改——改契约请改 models.py 后重跑 `python scripts/pfn/extract.py schema`。填写规则见 SKILL.md 的两条铁律：原文没写就填 not_reported（严禁猜测 groups[].n / 剂量 / stats.test），每个字段都要在 evidence 里溯源。",
+  "$defs": {
+    "Confidence": {
+      "enum": [
+        "high",
+        "medium",
+        "low"
+      ],
+      "title": "Confidence",
+      "type": "string"
+    },
+    "Design": {
+      "description": "实验设计骨架。levels 即分组依据的各个水平。",
+      "properties": {
+        "independent_var": {
+          "default": "not_reported",
+          "title": "Independent Var",
+          "type": "string"
+        },
+        "levels": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Levels",
+          "type": "array"
+        },
+        "controlled": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Controlled",
+          "type": "array"
+        },
+        "unit": {
+          "default": "not_reported",
+          "title": "Unit",
+          "type": "string"
+        }
+      },
+      "title": "Design",
+      "type": "object"
+    },
+    "Evidence": {
+      "description": "逐字段溯源。人工复核时只需重点看 inferred。",
+      "properties": {
+        "from_caption": {
+          "items": {
+            "type": "string"
+          },
+          "title": "From Caption",
+          "type": "array"
+        },
+        "from_body": {
+          "items": {
+            "type": "string"
+          },
+          "title": "From Body",
+          "type": "array"
+        },
+        "from_methods": {
+          "items": {
+            "type": "string"
+          },
+          "title": "From Methods",
+          "type": "array"
+        },
+        "from_image_only": {
+          "items": {
+            "type": "string"
+          },
+          "title": "From Image Only",
+          "type": "array"
+        },
+        "inferred": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Inferred",
+          "type": "array"
+        }
+      },
+      "title": "Evidence",
+      "type": "object"
+    },
+    "Group": {
+      "description": "一个实验组。这是跨文献汇总长表的行粒度。",
+      "properties": {
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "role": {
+          "enum": [
+            "treatment",
+            "control",
+            "baseline",
+            "ablation",
+            "reference"
+          ],
+          "title": "Role",
+          "type": "string"
+        },
+        "condition": {
+          "default": "not_reported",
+          "title": "Condition",
+          "type": "string"
+        },
+        "n": {
+          "default": "not_reported",
+          "title": "N",
+          "type": "string"
+        },
+        "readout": {
+          "default": "not_reported",
+          "title": "Readout",
+          "type": "string"
+        },
+        "result": {
+          "default": "not_reported",
+          "title": "Result",
+          "type": "string"
+        },
+        "vs_control": {
+          "default": "not_reported",
+          "title": "Vs Control",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "role"
+      ],
+      "title": "Group",
+      "type": "object"
+    },
+    "Panel": {
+      "description": "子图 = 分析单位。一张图常含多个互相独立的实验。",
+      "properties": {
+        "label": {
+          "title": "Label",
+          "type": "string"
+        },
+        "experiment": {
+          "default": "not_reported",
+          "title": "Experiment",
+          "type": "string"
+        },
+        "design": {
+          "$ref": "#/$defs/Design"
+        },
+        "groups": {
+          "items": {
+            "$ref": "#/$defs/Group"
+          },
+          "title": "Groups",
+          "type": "array"
+        },
+        "stats": {
+          "$ref": "#/$defs/Stats"
+        },
+        "finding": {
+          "default": "not_reported",
+          "title": "Finding",
+          "type": "string"
+        },
+        "evidence": {
+          "$ref": "#/$defs/Evidence"
+        }
+      },
+      "required": [
+        "label"
+      ],
+      "title": "Panel",
+      "type": "object"
+    },
+    "PaperMeta": {
+      "properties": {
+        "title": {
+          "default": "",
+          "title": "Title",
+          "type": "string"
+        },
+        "year": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Year"
+        },
+        "venue": {
+          "default": "",
+          "title": "Venue",
+          "type": "string"
+        },
+        "doi": {
+          "default": "",
+          "title": "Doi",
+          "type": "string"
+        }
+      },
+      "title": "PaperMeta",
+      "type": "object"
+    },
+    "Stats": {
+      "properties": {
+        "test": {
+          "default": "not_reported",
+          "title": "Test",
+          "type": "string"
+        },
+        "error_bar": {
+          "default": "not_reported",
+          "title": "Error Bar",
+          "type": "string"
+        },
+        "replicates": {
+          "default": "not_reported",
+          "title": "Replicates",
+          "type": "string"
+        },
+        "significance": {
+          "default": "not_reported",
+          "title": "Significance",
+          "type": "string"
+        }
+      },
+      "title": "Stats",
+      "type": "object"
+    }
+  },
+  "properties": {
+    "schema_version": {
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "paper": {
+      "$ref": "#/$defs/PaperMeta"
+    },
+    "domain": {
+      "default": "mlcs",
+      "enum": [
+        "bio",
+        "mlcs"
+      ],
+      "title": "Domain",
+      "type": "string"
+    },
+    "figure_id": {
+      "title": "Figure Id",
+      "type": "string"
+    },
+    "kind": {
+      "default": "figure",
+      "enum": [
+        "figure",
+        "table"
+      ],
+      "title": "Kind",
+      "type": "string"
+    },
+    "pages": {
+      "items": {
+        "type": "integer"
+      },
+      "title": "Pages",
+      "type": "array"
+    },
+    "images": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Images",
+      "type": "array"
+    },
+    "caption": {
+      "default": "",
+      "title": "Caption",
+      "type": "string"
+    },
+    "figure_kind": {
+      "default": "experiment",
+      "enum": [
+        "experiment",
+        "schematic",
+        "qualitative_example",
+        "analysis"
+      ],
+      "title": "Figure Kind",
+      "type": "string"
+    },
+    "question": {
+      "default": "not_reported",
+      "title": "Question",
+      "type": "string"
+    },
+    "panels": {
+      "items": {
+        "$ref": "#/$defs/Panel"
+      },
+      "title": "Panels",
+      "type": "array"
+    },
+    "figure_conclusion": {
+      "default": "not_reported",
+      "title": "Figure Conclusion",
+      "type": "string"
+    },
+    "confidence": {
+      "$ref": "#/$defs/Confidence",
+      "default": "medium"
+    },
+    "open_questions": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Open Questions",
+      "type": "array"
+    }
+  },
+  "required": [
+    "figure_id"
+  ],
+  "type": "object"
+}

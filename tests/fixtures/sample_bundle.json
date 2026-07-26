@@ -1,0 +1,308 @@
+{
+  "schema_version": "1.0",
+  "paper": {
+    "title": "The curcumin derivative DMC-GF promotes ferroptosis through the Nrf2/HMOX1 pathway, increasing glioma susceptibility to temozolomide",
+    "year": 2026,
+    "venue": "Scientific Reports",
+    "doi": "10.1038/s41598-026-46904-0"
+  },
+  "domain": "bio",
+  "source_pdf": "scirep_dmcgf.pdf",
+  "output_dir": "notes_scirep_dmcgf",
+  "figures": [
+    {
+      "schema_version": "1.0",
+      "paper": {
+        "title": "The curcumin derivative DMC-GF promotes ferroptosis through the Nrf2/HMOX1 pathway",
+        "year": 2026,
+        "venue": "Scientific Reports",
+        "doi": "10.1038/s41598-026-46904-0"
+      },
+      "domain": "bio",
+      "figure_id": "Figure 1",
+      "kind": "figure",
+      "pages": [4],
+      "images": ["figures/fig_01.png"],
+      "caption": "Fig. 1. DMC-GF exhibits pronounced antitumour activity in vitro. (A) CCK-8 assay and analysis of cell viability in U251 and U87 cells treated with DMC-GF. (B) Flow cytometry of apoptosis after DMC-GF treatment. (C) Quantification of apoptotic rate.",
+      "figure_kind": "experiment",
+      "question": "DMC-GF 是否在体外对胶质瘤细胞具有抗肿瘤活性，并呈剂量依赖性诱导凋亡？",
+      "panels": [
+        {
+          "label": "A",
+          "experiment": "CCK-8 法测定 DMC-GF 对两株胶质瘤细胞的剂量-时间依赖性杀伤，拟合 IC50",
+          "design": {
+            "independent_var": "DMC-GF 浓度 × 处理时长",
+            "levels": ["0-4.5 μM 梯度", "12 h", "24 h", "48 h"],
+            "controlled": ["细胞株 U251 / U87 分别独立测定", "同批次接种密度"],
+            "unit": "细胞孔"
+          },
+          "groups": [
+            {
+              "name": "U251 · 12 h",
+              "role": "treatment",
+              "condition": "DMC-GF 0-4.5 μM 梯度，处理 12 h",
+              "n": "not_reported",
+              "readout": "细胞活力（CCK-8, %）",
+              "result": "IC50 = 5.148 μM；4.5 μM 时活力降至约 55%",
+              "vs_control": "相对 0 μM 对照下降约 45%"
+            },
+            {
+              "name": "U251 · 24 h",
+              "role": "treatment",
+              "condition": "DMC-GF 0-4.5 μM 梯度，处理 24 h",
+              "n": "not_reported",
+              "readout": "细胞活力（CCK-8, %）",
+              "result": "IC50 = 3.205 μM；4.5 μM 时活力约 33%",
+              "vs_control": "较 12 h 组 IC50 下降 38%"
+            },
+            {
+              "name": "U251 · 48 h",
+              "role": "treatment",
+              "condition": "DMC-GF 0-4.5 μM 梯度，处理 48 h",
+              "n": "not_reported",
+              "readout": "细胞活力（CCK-8, %）",
+              "result": "IC50 = 2.677 μM；4.5 μM 时活力约 26%",
+              "vs_control": "三个时间点中杀伤最强"
+            },
+            {
+              "name": "U87 · 48 h",
+              "role": "treatment",
+              "condition": "DMC-GF 0-4.5 μM 梯度，处理 48 h",
+              "n": "not_reported",
+              "readout": "细胞活力（CCK-8, %）",
+              "result": "IC50 = 2.697 μM",
+              "vs_control": "与 U251 同期相近，提示不依赖特定细胞株"
+            }
+          ],
+          "stats": {
+            "test": "not_reported",
+            "error_bar": "图中有误差棒，类型未标注",
+            "replicates": "not_reported",
+            "significance": "not_reported"
+          },
+          "finding": "DMC-GF 对 U251 与 U87 均呈剂量与时间依赖性杀伤，48 h IC50 约 2.7 μM",
+          "evidence": {
+            "from_caption": ["experiment", "design.independent_var"],
+            "from_body": ["§2.3¶1"],
+            "from_methods": ["§4.2"],
+            "from_image_only": ["groups[].result", "IC50 数值"],
+            "inferred": ["design.controlled"]
+          }
+        },
+        {
+          "label": "B",
+          "experiment": "Annexin V-FITC/PI 双染流式检测 DMC-GF 处理后的凋亡分布",
+          "design": {
+            "independent_var": "DMC-GF 浓度",
+            "levels": ["0 μM", "1.5 μM", "3 μM", "5 μM"],
+            "controlled": ["同一细胞株", "同一处理时长"],
+            "unit": "细胞样本"
+          },
+          "groups": [
+            {
+              "name": "0 μM",
+              "role": "control",
+              "condition": "溶剂对照，不加 DMC-GF",
+              "n": "not_reported",
+              "readout": "Annexin V+/PI+ 象限占比（Q1-UR）",
+              "result": "Q1-UR 0.33%，Q1-LL（活细胞）98.39%",
+              "vs_control": "基线"
+            },
+            {
+              "name": "1.5 μM",
+              "role": "treatment",
+              "condition": "DMC-GF 1.5 μM",
+              "n": "not_reported",
+              "readout": "Annexin V+/PI+ 象限占比",
+              "result": "Q1-UR 11.49%，活细胞降至 84.80%",
+              "vs_control": "晚期凋亡较对照升高约 35 倍"
+            },
+            {
+              "name": "3 μM",
+              "role": "treatment",
+              "condition": "DMC-GF 3 μM",
+              "n": "not_reported",
+              "readout": "Annexin V+/PI+ 象限占比",
+              "result": "Q1-UR 63.55%，活细胞降至 23.51%",
+              "vs_control": "凋亡占比超过存活占比"
+            },
+            {
+              "name": "5 μM",
+              "role": "treatment",
+              "condition": "DMC-GF 5 μM",
+              "n": "not_reported",
+              "readout": "Annexin V+/PI+ 象限占比",
+              "result": "Q1-UR 86.63%，活细胞仅 5.63%",
+              "vs_control": "接近全部凋亡"
+            }
+          ],
+          "stats": {
+            "test": "not_reported",
+            "error_bar": "not_reported",
+            "replicates": "not_reported",
+            "significance": "not_reported"
+          },
+          "finding": "DMC-GF 剂量依赖性诱导凋亡，5 μM 时凋亡率达 86.63%",
+          "evidence": {
+            "from_caption": ["experiment"],
+            "from_body": ["§2.3¶2"],
+            "from_methods": ["§4.5"],
+            "from_image_only": ["groups[].result", "象限百分比"],
+            "inferred": []
+          }
+        },
+        {
+          "label": "C",
+          "experiment": "凋亡率定量统计（对应 panel B 的柱状汇总）",
+          "design": {
+            "independent_var": "DMC-GF 浓度",
+            "levels": ["0 μM", "1.5 μM", "3 μM", "5 μM"],
+            "controlled": ["同 panel B 的流式数据"],
+            "unit": "独立重复"
+          },
+          "groups": [
+            {
+              "name": "0 μM",
+              "role": "control",
+              "condition": "溶剂对照",
+              "n": "3（图中散点为 3 个）",
+              "readout": "凋亡率（%）",
+              "result": "接近 0%",
+              "vs_control": "基线"
+            },
+            {
+              "name": "3 μM",
+              "role": "treatment",
+              "condition": "DMC-GF 3 μM",
+              "n": "3（图中散点为 3 个）",
+              "readout": "凋亡率（%）",
+              "result": "约 75%",
+              "vs_control": "*** p<0.001"
+            },
+            {
+              "name": "5 μM",
+              "role": "treatment",
+              "condition": "DMC-GF 5 μM",
+              "n": "3（图中散点为 3 个）",
+              "readout": "凋亡率（%）",
+              "result": "约 93%",
+              "vs_control": "*** p<0.001"
+            }
+          ],
+          "stats": {
+            "test": "not_reported",
+            "error_bar": "图中为误差棒 + 单点散布，类型未标注",
+            "replicates": "3（据散点数目推断）",
+            "significance": "*** 标注于 0 μM 与 3 μM 之间"
+          },
+          "finding": "凋亡率随剂量显著升高，3 μM 起达到 *** 显著水平",
+          "evidence": {
+            "from_caption": ["experiment"],
+            "from_body": [],
+            "from_methods": [],
+            "from_image_only": ["groups[].result", "stats.significance"],
+            "inferred": ["groups[].n", "stats.replicates"]
+          }
+        }
+      ],
+      "figure_conclusion": "DMC-GF 在体外对 U251/U87 胶质瘤细胞具有剂量与时间依赖性杀伤，48 h IC50 约 2.7 μM，并以剂量依赖方式诱导凋亡",
+      "confidence": "high",
+      "open_questions": [
+        "CCK-8 与流式实验的生物学重复数未在图题或正文中说明",
+        "误差棒为 SD 还是 SEM 未标注",
+        "凋亡率统计所用检验方法未说明"
+      ]
+    },
+    {
+      "schema_version": "1.0",
+      "paper": {
+        "title": "The curcumin derivative DMC-GF promotes ferroptosis through the Nrf2/HMOX1 pathway",
+        "year": 2026,
+        "venue": "Scientific Reports",
+        "doi": "10.1038/s41598-026-46904-0"
+      },
+      "domain": "bio",
+      "figure_id": "Figure 2",
+      "kind": "figure",
+      "pages": [6, 8],
+      "images": ["figures/fig_02_p6.png", "figures/fig_02_p8.png"],
+      "caption": "Fig. 2. DMC-GF promotes HMOX1 expression through multi-omics analysis and experimental validation.",
+      "figure_kind": "analysis",
+      "question": "转录组层面 DMC-GF 处理后哪些通路与基因被显著改变？",
+      "panels": [
+        {
+          "label": "A",
+          "experiment": "差异表达火山图，标注 HMOX1",
+          "design": {
+            "independent_var": "DMC-GF 处理 vs 对照",
+            "levels": ["DMC-GF 处理组", "对照组"],
+            "controlled": ["同一细胞株", "同一测序批次"],
+            "unit": "转录组样本"
+          },
+          "groups": [
+            {
+              "name": "上调基因（up）",
+              "role": "treatment",
+              "condition": "DMC-GF 处理后 log2FC > 1 且 padj 显著",
+              "n": "not_reported",
+              "readout": "log2FC / -log10(padj)",
+              "result": "HMOX1 位于显著上调区最右上，-log10(padj) 达到坐标轴上限",
+              "vs_control": "相对对照显著上调"
+            },
+            {
+              "name": "下调基因（down）",
+              "role": "reference",
+              "condition": "log2FC < -1 且 padj 显著",
+              "n": "not_reported",
+              "readout": "log2FC / -log10(padj)",
+              "result": "下调基因数量明显少于上调",
+              "vs_control": "相对对照显著下调"
+            }
+          ],
+          "stats": {
+            "test": "差异表达检验（具体方法未在图中标注）",
+            "error_bar": "not_reported",
+            "replicates": "not_reported",
+            "significance": "以 padj 与 log2FC 双阈值虚线划分"
+          },
+          "finding": "HMOX1 是 DMC-GF 处理后最显著上调的基因之一",
+          "evidence": {
+            "from_caption": ["experiment"],
+            "from_body": ["§2.4¶1"],
+            "from_methods": [],
+            "from_image_only": ["groups[].result"],
+            "inferred": ["stats.test"]
+          }
+        }
+      ],
+      "figure_conclusion": "多组学分析将 HMOX1 指认为 DMC-GF 的关键下游效应基因",
+      "confidence": "medium",
+      "open_questions": [
+        "转录组测序的生物学重复数未说明",
+        "差异表达所用统计方法与阈值未在图注中给出"
+      ]
+    },
+    {
+      "schema_version": "1.0",
+      "paper": {
+        "title": "The curcumin derivative DMC-GF promotes ferroptosis through the Nrf2/HMOX1 pathway",
+        "year": 2026,
+        "venue": "Scientific Reports",
+        "doi": "10.1038/s41598-026-46904-0"
+      },
+      "domain": "bio",
+      "figure_id": "Figure 6",
+      "kind": "figure",
+      "pages": [12],
+      "images": ["figures/fig_06.png"],
+      "caption": "Fig. 6. Schematic diagram of the proposed mechanism by which DMC-GF induces ferroptosis via Nrf2/HMOX1.",
+      "figure_kind": "schematic",
+      "question": "本文提出的作用机制示意",
+      "panels": [],
+      "figure_conclusion": "示意图，非实验数据：DMC-GF → Nrf2 活化 → HMOX1 上调 → 铁死亡 → TMZ 敏感性增强",
+      "confidence": "high",
+      "open_questions": []
+    }
+  ],
+  "warnings": []
+}

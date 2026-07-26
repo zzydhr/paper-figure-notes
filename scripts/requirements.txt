@@ -1,0 +1,11 @@
+# paper-figure-notes 依赖
+# 本机（D:\miniconda3, Python 3.10）实测均已预装，正常无需再装。
+
+PyMuPDF>=1.24        # PDF 解析与切图渲染（核心，1.26.4 实测通过）
+pydantic>=2.0        # 数据契约与校验
+pandas>=2.0          # 长表汇总
+openpyxl>=3.1        # xlsx 输出
+Pillow>=10.0         # index.html 里内嵌的切图缩略图（缺失时页面自动省略图片，不报错）
+
+# 可选：模式 B（API 批量抽取）才需要
+# openai>=1.0        # 走 OpenAI 兼容端点
